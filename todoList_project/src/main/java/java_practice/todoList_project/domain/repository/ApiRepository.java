@@ -13,6 +13,7 @@ public class ApiRepository {
     TaskTblMapper taskMp;
 
     public Tasktbl getTaskName(){
+        Tasktbl tasktbl = taskMp.selectAll();
         return taskMp.selectAll();
     }
 }
