@@ -1,8 +1,8 @@
 package java_practice.todoList_project.domain.repository.mapper;
 
 import java.util.List;
-import model.Tasktbl;
-import model.TasktblExample;
+import java_practice.todoList_project.domain.repository.entity.Tasktbl;
+import java_practice.todoList_project.domain.repository.entity.TasktblExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

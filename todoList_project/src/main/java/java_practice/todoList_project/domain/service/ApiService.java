@@ -3,7 +3,6 @@ package java_practice.todoList_project.domain.service;
 import java_practice.todoList_project.controller.model.ResponseModel;
 import java_practice.todoList_project.controller.model.TaskModel;
 import java_practice.todoList_project.domain.repository.ApiRepository;
-import java_practice.todoList_project.domain.repository.entity.TaskTblEntity;
 import model.Tasktbl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
