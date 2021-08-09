@@ -3,7 +3,7 @@ package java_practice.todoList_project.domain.service;
 import java_practice.todoList_project.controller.model.ResponseModel;
 import java_practice.todoList_project.controller.model.TaskModel;
 import java_practice.todoList_project.domain.repository.ApiRepository;
-import model.Tasktbl;
+import java_practice.todoList_project.domain.repository.entity.Tasktbl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class ApiService {
 
         taskModel.setTaskname(tasktbl.getTaskname());
 
-        List<TaskModel> taskModelList = new ArrayList<TaskModel>();
+        List<TaskModel> taskModelList = new ArrayList<>();
 
         taskModelList.add(taskModel);
         resModel.setTaskModelList(taskModelList);
