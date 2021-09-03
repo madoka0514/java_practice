@@ -2,12 +2,19 @@ package java_practice.todoList_project.controller.model;
 
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Table: TaskModel
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class TaskModel {
     /**
      * Column: taskname
@@ -17,7 +24,7 @@ public class TaskModel {
     /**
      * Column: deadline
      */
-    private Date deadline;
+    private String deadline;
 
     /**
      * Column: primaryflag
@@ -27,11 +34,11 @@ public class TaskModel {
     /**
      * Column: regdate
      */
-    private Date regdate;
+    private String regdate;
 
     /**
      * Column: upddate
      */
-    private Date upddate;
+    private String upddate;
 }
 

@@ -41,12 +41,13 @@ public interface TaskTblMapper {
      */
     List<Tasktbl> selectByExample(TasktblExample example);
 
-    Tasktbl selectAll();
+    List<Tasktbl> selectAll();
     /**
      * @mbg.generated generated automatically, do not modify!
      */
     Tasktbl selectByPrimaryKey(String taskname);
 
+    List<Tasktbl> selectPriflgTask(String primaryflag);
     /**
      * @mbg.generated generated automatically, do not modify!
      */

@@ -1,5 +1,6 @@
 package java_practice.todoList_project.domain.repository.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class Tasktbl {
     /**
      * Column: deadline
      */
-    private Date deadline;
+    private Timestamp deadline;
 
     /**
      * Column: primaryflag
@@ -26,10 +27,10 @@ public class Tasktbl {
     /**
      * Column: regdate
      */
-    private Date regdate;
+    private Timestamp regdate;
 
     /**
      * Column: upddate
      */
-    private Date upddate;
+    private Timestamp upddate;
 }
