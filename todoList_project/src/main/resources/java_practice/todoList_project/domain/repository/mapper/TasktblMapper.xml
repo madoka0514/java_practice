@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="java_practice.todoList_project.domain.repository.mapper.TaskTblMapper">
+  <resultMap id="BaseResultMap" type="java_practice.todoList_project.domain.repository.entity.Tasktbl">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="taskname" jdbcType="VARCHAR" property="taskname" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
+    <result column="primaryflag" jdbcType="VARCHAR" property="primaryflag" />
+    <result column="regdate" jdbcType="TIMESTAMP" property="regdate" />
+    <result column="upddate" jdbcType="TIMESTAMP" property="upddate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    taskname, deadline, primaryflag, regdate, upddate
+  </sql>
+  <select id="selectByExample" parameterType="java_practice.todoList_project.domain.repository.entity.TasktblExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tasktbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <include refid="Base_Column_List" />
+    from tasktbl
+    where taskname = #{taskname,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectPriflgTask" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <include refid="Base_Column_List" />
+    from tasktbl
+    where primaryflag = #{primaryflag,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <include refid="Base_Column_List" />
+    from tasktbl
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from tasktbl
+    where taskname = #{taskname,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="java_practice.todoList_project.domain.repository.entity.TasktblExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from tasktbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="java_practice.todoList_project.domain.repository.entity.Tasktbl">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into tasktbl (taskname, deadline, primaryflag, 
+      regdate, upddate)
+    values (#{taskname,jdbcType=VARCHAR}, #{deadline,jdbcType=TIMESTAMP}, #{primaryflag,jdbcType=VARCHAR}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{upddate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="java_practice.todoList_project.domain.repository.entity.Tasktbl">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into tasktbl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskname != null">
+        taskname,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+      <if test="primaryflag != null">
+        primaryflag,
+      </if>
+      <if test="regdate != null">
+        regdate,
+      </if>
+      <if test="upddate != null">
+        upddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskname != null">
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="primaryflag != null">
+        #{primaryflag,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null">
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upddate != null">
+        #{upddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="java_practice.todoList_project.domain.repository.entity.TasktblExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from tasktbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update tasktbl
+    <set>
+      <if test="row.taskname != null">
+        taskname = #{row.taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.deadline != null">
+        deadline = #{row.deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.primaryflag != null">
+        primaryflag = #{row.primaryflag,jdbcType=VARCHAR},
+      </if>
+      <if test="row.regdate != null">
+        regdate = #{row.regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.upddate != null">
+        upddate = #{row.upddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update tasktbl
+    set taskname = #{row.taskname,jdbcType=VARCHAR},
+      deadline = #{row.deadline,jdbcType=TIMESTAMP},
+      primaryflag = #{row.primaryflag,jdbcType=VARCHAR},
+      regdate = #{row.regdate,jdbcType=TIMESTAMP},
+      upddate = #{row.upddate,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="java_practice.todoList_project.domain.repository.entity.Tasktbl">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update tasktbl
+    <set>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="primaryflag != null">
+        primaryflag = #{primaryflag,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null">
+        regdate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upddate != null">
+        upddate = #{upddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where taskname = #{taskname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="java_practice.todoList_project.domain.repository.entity.Tasktbl">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update tasktbl
+    set deadline = #{deadline,jdbcType=TIMESTAMP},
+      primaryflag = #{primaryflag,jdbcType=VARCHAR},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      upddate = #{upddate,jdbcType=TIMESTAMP}
+    where taskname = #{taskname,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>
