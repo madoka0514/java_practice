@@ -2,7 +2,6 @@ package java_practice.todoList_project.controller;
 
 import java_practice.todoList_project.controller.model.RequestModel;
 import java_practice.todoList_project.controller.model.ResponseModel;
-import java_practice.todoList_project.controller.model.TaskModel;
 import java_practice.todoList_project.domain.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value="/todoList")
@@ -51,6 +48,13 @@ public class ApiController{
         }catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    // 完了済みのタスクのみ取得する
+    @GetMapping(value="/finishTaskList")
+    public ResponseEntity<Object> getFinishTaskList(){
+        ResponseModel resModel = apiSvc.getFinishTaskList();
+        return new ResponseEntity<Object>(resModel,HttpStatus.OK);
     }
 
 }

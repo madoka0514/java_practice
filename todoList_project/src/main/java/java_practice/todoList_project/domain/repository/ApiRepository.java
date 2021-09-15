@@ -1,13 +1,14 @@
 package java_practice.todoList_project.domain.repository;
 
 import java_practice.todoList_project.domain.repository.entity.Tasktbl;
+import java_practice.todoList_project.domain.repository.entity.TasktblExample;
 import java_practice.todoList_project.domain.repository.mapper.TaskTblMapper;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,27 +22,31 @@ public class ApiRepository {
     }
 
     //新規タスクを登録
-    public void insertTask(List<Tasktbl> taskTblList) {
-
-        for(int i=0;i<taskTblList.size();i++){
-            Tasktbl tasktbl = new Tasktbl();
-            tasktbl = taskTblList.get(i);
+    public void insertTask(@NotNull List<Tasktbl> taskTblList) {
+        // 拡張for文
+        for(Tasktbl tasktbl : taskTblList){
             taskMp.insert(tasktbl);
         }
     }
 
-    public void deleteTask(List<String> deleteTaskNameList) {
-        for(int i=0;i<deleteTaskNameList.size();i++){
-            String deleteTaskName= deleteTaskNameList.get(i);
+    public void deleteTask(@NotNull List<String> deleteTaskNameList) {
+        for(String deleteTaskName : deleteTaskNameList) {
             taskMp.deleteByPrimaryKey(deleteTaskName);
         }
     }
 
-    public void updateTask(List<Tasktbl> updateTasktblList) {
-        for(int i=0;i<updateTasktblList.size();i++){
-            Tasktbl tasktbl = new Tasktbl();
-            tasktbl = updateTasktblList.get(i);
+    public void updateTask(@NotNull List<Tasktbl> updateTaskTblList) {
+        for(Tasktbl tasktbl:updateTaskTblList){
             taskMp.updateByPrimaryKey(tasktbl);
         }
+    }
+
+    public List<Tasktbl> getFinishTaskList() {
+        TasktblExample tasktblExample = new TasktblExample();
+        // フラグが９（完了）のタスクを取得
+        tasktblExample.createCriteria().andPrimaryflagEqualTo("9");
+        // deadlineでソートして取得
+        tasktblExample.setOrderByClause("deadline");
+        return taskMp.selectByExample(tasktblExample);
     }
 }

@@ -26,21 +26,17 @@ public class ApiService {
         ResponseModel resModel = new ResponseModel();
 
         // タスク一覧を受け取る
-        List tasktblList = apiRep.getTaskName();
+        List<Tasktbl> taskTblList = apiRep.getTaskName();
 
-        List<ResponseModel> resModelList = new ArrayList<>();
         List<TaskModel> taskModelList = new ArrayList<>();
         // Iteratorを使う
-        Iterator tasktblListIt = tasktblList.iterator();
-        while(tasktblListIt.hasNext()){
+        Iterator<Tasktbl> taskTblListIt = taskTblList.iterator();
+        while(taskTblListIt.hasNext()){
 
-            Tasktbl tasktbl = (Tasktbl)tasktblListIt.next();
-
-            TaskModel taskModel = new TaskModel();
+            Tasktbl tasktbl = taskTblListIt.next();
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-//            taskModel.setTaskname(tasktbl.getTaskname());
             TaskModel taskModel2 = TaskModel.builder()
                     .deadline(df.format(tasktbl.getDeadline()))
                     .taskname(tasktbl.getTaskname())
@@ -59,40 +55,38 @@ public class ApiService {
     public void insertTask(RequestModel reqModel) throws ParseException {
 
         List<TaskModel> taskModelList =reqModel.getTaskModelList();
-        List<Tasktbl> taskTblList = new ArrayList<Tasktbl>();
+        List<Tasktbl> taskTblList = new ArrayList<>();
 
-        for(int i=0;i<taskModelList.size();i++){
-            // taskModelListから１要素ずつtaskModelに格納
-//            TaskModel taskModel = new TaskModel();
-            TaskModel taskModel=taskModelList.get(i);
+        for(TaskModel taskModel:taskModelList){
 
-            // taskModel1の情報をtasktblに格納
-            Tasktbl tasktbl = new Tasktbl();
-            tasktbl.setTaskname(taskModel.getTaskname());
-            tasktbl.setPrimaryflag(taskModel.getPrimaryflag());
+            // taskModel1の情報をtaskTblに格納
+            Tasktbl taskTbl = new Tasktbl();
+            taskTbl.setTaskname(taskModel.getTaskname());
+
+            // フラグを格納（新規登録時は０（未着手））
+            taskTbl.setPrimaryflag("0");
 
             // String→TimeStampに変換して格納
             SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
             Timestamp tsDeadline = new Timestamp(sdFormat.parse(taskModel.getDeadline()).getTime());
-            tasktbl.setDeadline(tsDeadline);
+            taskTbl.setDeadline(tsDeadline);
 
             // 現在時刻を格納
             Date nowDate = new Date();
             Timestamp tsNowDate = new Timestamp(nowDate.getTime());
-            tasktbl.setRegdate(tsNowDate);
-            tasktbl.setUpddate(tsNowDate);
+            taskTbl.setRegdate(tsNowDate);
+            taskTbl.setUpddate(tsNowDate);
 
-            taskTblList.add(tasktbl);
+            taskTblList.add(taskTbl);
         }
         apiRep.insertTask(taskTblList);
     }
 
     public void deleteTask(RequestModel reqModel) {
         List<TaskModel> taskModelList =reqModel.getTaskModelList();
-        List<String> deleteTaskNameList = new ArrayList<String>();
+        List<String> deleteTaskNameList = new ArrayList<>();
 
-        for(int i=0;i<taskModelList.size();i++){
-            TaskModel taskModel=taskModelList.get(i);
+        for(TaskModel taskModel:taskModelList){
             deleteTaskNameList.add(taskModel.getTaskname());
         }
 
@@ -101,30 +95,51 @@ public class ApiService {
 
     public void updateTask(RequestModel reqModel) throws ParseException{
         List<TaskModel> taskModelList =reqModel.getTaskModelList();
-        List<Tasktbl> updateTasktblList = new ArrayList<Tasktbl>();
+        List<Tasktbl> updateTaskTblList = new ArrayList<>();
 
-        for(int i=0;i<taskModelList.size();i++){
-            TaskModel taskModel=taskModelList.get(i);
-
-            // taskModel1の情報をtasktblに格納
-            Tasktbl tasktbl = new Tasktbl();
-            tasktbl.setTaskname(taskModel.getTaskname());
-            tasktbl.setPrimaryflag(taskModel.getPrimaryflag());
+        for(TaskModel taskModel:taskModelList){
+            // taskModelの情報をtaskTblに格納
+            Tasktbl taskTbl = new Tasktbl();
+            taskTbl.setTaskname(taskModel.getTaskname());
+            taskTbl.setPrimaryflag(taskModel.getPrimaryflag());
 
             // String→TimeStampに変換して格納
             SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
             Timestamp tsDeadline = new Timestamp(sdFormat.parse(taskModel.getDeadline()).getTime());
-            tasktbl.setDeadline(tsDeadline);
+            taskTbl.setDeadline(tsDeadline);
 
             // 現在時刻を格納
             Date nowDate = new Date();
             Timestamp tsNowDate = new Timestamp(nowDate.getTime());
-            tasktbl.setRegdate(tsNowDate);
+            taskTbl.setRegdate(tsNowDate);
 
-            updateTasktblList.add(tasktbl);
+            updateTaskTblList.add(taskTbl);
         }
 
-        apiRep.updateTask(updateTasktblList);
+        apiRep.updateTask(updateTaskTblList);
     }
 
+    public ResponseModel getFinishTaskList() {
+        // 完了済みタスク一覧を受け取る
+        List<Tasktbl> finishTaskTblList = apiRep.getFinishTaskList();
+        ResponseModel resModel = new ResponseModel();
+
+        for(Tasktbl taskTbl:finishTaskTblList){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            TaskModel taskModel = TaskModel.builder()
+                    .deadline(df.format(taskTbl.getDeadline()))
+                    .taskname(taskTbl.getTaskname())
+                    .primaryflag(taskTbl.getPrimaryflag())
+                    .regdate(df.format(taskTbl.getRegdate()))
+                    .upddate(df.format(taskTbl.getUpddate()))
+                    .build();
+
+            List<TaskModel> taskModelList = new ArrayList<>();
+            taskModelList.add(taskModel);
+
+            resModel.setTaskModelList(taskModelList);
+        }
+        return resModel;
+    }
 }

@@ -109,6 +109,7 @@
     select
     <include refid="Base_Column_List" />
     from tasktbl
+    order by deadline
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
